@@ -11,6 +11,7 @@
             body {
                 background: #0000ff;
                 background: linear-gradient(90deg,rgba(0, 0, 255, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+                font-family: monospace;
             }
 
             /*does the title*/
@@ -55,6 +56,72 @@
             /*** Left column ***/
             #movie-filter {
                 margin: 10px;
+            }
+            .preference-group {
+                border: 1px solid #9aa7c0;
+                border-radius: 10px;
+                padding: 10px;
+                background: #f7f9ff;
+            }
+            .preference-group--scroll {
+                max-height: 220px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                scrollbar-gutter: stable;
+                scrollbar-width: thin;
+                scrollbar-color: #a6b4d3 transparent;
+                padding-right: 6px;
+            }
+            .preference-group--grid-multi {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+                gap: 8px;
+            }
+            .preference-group--grid-single {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .genre-item,
+            .person-item,
+            .language-item,
+            .streaming-region-item {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 8px;
+                border-radius: 8px;
+                background-color: #ffffff;
+                border: 1px solid #d7dff0;
+            }
+            .genre-item:hover,
+            .person-item:hover,
+            .language-item:hover,
+            .streaming-region-item:hover {
+                border-color: #8fa5d6;
+                background-color: #eef3ff;
+            }
+            .preference-group--scroll input {
+                margin: 0;
+                accent-color: #3057a6;
+            }
+            .preference-group--scroll label {
+                cursor: pointer;
+                line-height: 1.2;
+                font-size: 0.9rem;
+            }
+            .preference-group--scroll::-webkit-scrollbar {
+                width: 10px;
+            }
+            .preference-group--scroll::-webkit-scrollbar-track {
+                background: transparent;
+                border-radius: 999px;
+                margin: 6px 2px 6px 0;
+            }
+            .preference-group--scroll::-webkit-scrollbar-thumb {
+                background-color: #a6b4d3;
+                border-radius: 999px;
+                border: 2px solid #f7f9ff;
             }
             .filtergroup-line {
                 display: none;
@@ -110,6 +177,9 @@
             }
 
             /*** Right column stuff ***/
+            #results-header {
+                text-align: center;
+            }
             #results-image {
                 position: absolute;
                 transform: translate(-50%, -50%);
@@ -145,20 +215,17 @@
             </div>
             <form id="movie-filter">
                 <h2 class="preference-heading">Genre&ensp;<button id="genres-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="genres">
-                    <legend>Genre</legend>
+                <fieldset id="genres" class="preference-group preference-group--scroll preference-group--grid-multi">
                 </fieldset>
                 <hr id="genres-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Language&ensp;<button id="languages-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="languages">
-                    <legend>Language</legend>
+                <fieldset id="languages" class="preference-group preference-group--scroll preference-group--grid-single">
                 </fieldset>
                 <hr id="languages-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Release Date&ensp;<button id="release-date-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="release-date">
-                    <legend>Release Date</legend>
+                <fieldset id="release-date" class="preference-group">
                     <input id="min-release-slider" type="range" min="1900" max="2026" value="1900" step="1"/>
                     <input id="max-release-slider" type="range" min="1900" max="2026" value="2026" step="1"/><br/>
                     <label for="primary_release_date.gte">Min</label>
@@ -169,8 +236,7 @@
                 <hr id="release-date-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Runtime&ensp;<button id="runtime-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="runtime">
-                    <legend>Runtime</legend>
+                <fieldset id="runtime" class="preference-group">
                     <input id="min-runtime-slider" type="range" min="0" max="5" step="0.1"/>
                     <input id="max-runtime-slider" type="range" min="0" max="5" step="0.1"/><br/>
                     <label for="min-runtime">Min</label>
@@ -181,8 +247,7 @@
                 <hr id="runtime-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Minimum Rating&ensp;<button id="min-rating-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="min-rating">
-                    <legend>Average Rating</legend>
+                <fieldset id="min-rating" class="preference-group">
                     <input id="min-rating-slider" type="range" min="0" max="10" step="0.1"/><br/>
                     <label for="min-rating">Min</label>
                     <input id="min-rating-scrubber" type="number" name="min-rating" value="5" min="0" max="10" step="0.1" style="max-width: 50px"/>
@@ -190,22 +255,19 @@
                 <hr id="min-rating-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Involved Persons&ensp;<button id="involved-persons-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="involved-persons">
-                    <legend>Involved Persons</legend>
+                <fieldset id="involved-persons" class="preference-group preference-group--scroll preference-group--grid-multi">
                 </fieldset>
-                <hr id="involved-persons-line"/>
+                <hr id="involved-persons-line" class="filtergroup-line"/>
 
-                <h2 class="preference-heading">Involved Studios&ensp;<button id="involved-studios-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="involved-studios">
-                    <legend>Involved Studios</legend>
+                <!--TODO: Fix the Studio API call-->
+                <!--h2 class="preference-heading">Involved Studios&ensp;<button id="involved-studios-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="involved-studios" class="preference-group">
                 </fieldset>
-                <hr id="involved-studios-line" class="filtergroup-line"/>
+                <hr id="involved-studios-line" class="filtergroup-line"/-->
 
                 <h2 class="preference-heading">Streaming Region&ensp;<button id="streaming-regions-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
-                <fieldset id="streaming-regions">
-                    <legend>Streaming Region</legend>
+                <fieldset id="streaming-regions" class="preference-group preference-group--scroll preference-group--grid-single">
                 </fieldset>
-                <hr id="streaming-regions-line" class="filtergroup-line"/>
             </form>
         </div>
 
@@ -229,7 +291,7 @@
         <div id="right-col" class="col">
             <div id="movie-selector-div">
                 <button id="movie-selector">Pick a Movie</button>
-            </div>
+            </div><br/>
             <h2 id="results-header"></h2>
             <img id="results-image" src="assets/question-mark.png"></img>
         </div>

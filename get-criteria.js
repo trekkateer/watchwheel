@@ -16,7 +16,7 @@ Array.from(preferenceHeadings).forEach(element => {
 
     // Update UI to reflect the user's click
     fieldset.style.display = shouldOpen ? "block" : "none";
-    fieldline.style.display = !shouldOpen ? "block" : "none";
+    if (fieldline) {fieldline.style.display = !shouldOpen ? "block" : "none";}
     button.innerHTML = shouldOpen ? '<i class="fas fa-caret-up"></i>' : '<i class="fas fa-caret-down"></i>';
   })
 });
@@ -44,19 +44,26 @@ fetch("https://api.themoviedb.org/3/genre/movie/list", requestOptions)
       //Identifies the genre div
       const container = document.getElementById("genres");
       const elName = "with_genres=" + element.name.toLowerCase();
+      const inputId = "genre-" + element.id;
+
+      const row = document.createElement("div");
+      row.className = "genre-item";
 
       //Creates the checkbox for the genre
       const box = document.createElement("input");
       box.type = "checkbox";
       box.name = elName;
       box.value = element.id;
-      container.append(box);
+      box.id = inputId;
+      row.append(box);
 
       //Creates the label for the checkbox
       const label = document.createElement("label");
-      label.for = elName;
+      label.htmlFor = inputId;
       label.innerText = element.name;
-      container.append(label)
+      row.append(label);
+
+      container.append(row);
   }))
   .catch(error => console.log('error', error));
 
@@ -66,21 +73,28 @@ fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
   .then(result => result.forEach(element => {
       //Identifies the language div
       const container = document.getElementById("languages");
-      const elName = "language=" + element.english_name.toLowerCase();
+      const elName = "with_original_language";
+      const inputId = "language-" + element.iso_639_1;
+
+      const row = document.createElement("div");
+      row.className = "language-item";
 
       //Creates the radio for the language
       const button = document.createElement("input");
       button.type = "radio";
       button.name = elName;
       button.value = element.iso_639_1;
+      button.id = inputId;
       if (button.value === "en") { button.checked = "checked"; }
-      container.append(button);
+      row.append(button);
 
       //Creates the label for the radio
       const label = document.createElement("label");
-      label.for = elName;
+      label.htmlFor = inputId;
       label.innerText = element.english_name;
-      container.append(label)
+      row.append(label);
+
+      container.append(row);
   }))
   .catch(error => console.log('error', error));
 
@@ -131,19 +145,26 @@ for (var i = 1; i <= 20; i++) {// Loops through the pages
     .then(result => result.results.forEach(element => {
         //Identifies the region div
         const container = document.getElementById("involved-persons");
+        const inputId = "person-" + element.id;
+
+        const row = document.createElement("div");
+        row.className = "person-item";
 
         //Creates the box for the region
         const box = document.createElement("input");
         box.type = "checkbox";
         box.name = element.name;
         box.value = element.id;
-        container.append(box);
+        box.id = inputId;
+        row.append(box);
 
         //Creates the label for the box
         const label = document.createElement("label");
-        label.for = element.name;
+        label.htmlFor = inputId;
         label.innerText = element.name;
-        container.append(label)
+        row.append(label);
+
+        container.append(row);
     }))
     .catch(error => console.log('error', error));
 }
@@ -183,19 +204,25 @@ fetch("https://api.themoviedb.org/3/watch/providers/regions", requestOptions)
   .then(result => result.results.forEach(element => {
       //Identifies the region div
       const container = document.getElementById("streaming-regions");
+      const inputId = "region-" + element.iso_3166_1;
+
+      const row = document.createElement("div");
+      row.className = "streaming-region-item";
 
       //Creates the radio button for the region
       const button = document.createElement("input");
       button.type = "radio";
       button.name = element.english_name;
       button.value = element.iso_3166_1;
-      container.append(button);
-      container.innerHTML += "&nbsp;";
+      button.id = inputId;
+      row.append(button);
 
       //Creates the label for the button
       const label = document.createElement("label");
-      label.for = element.english_name;
+      label.htmlFor = inputId;
       label.innerText = element.english_name;
-      container.append(label)
+      row.append(label);
+
+      container.append(row);
   }))
   .catch(error => console.log('error', error));

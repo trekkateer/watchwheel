@@ -36,6 +36,7 @@ document.getElementById("movie-filter").addEventListener("submit", function(e) {
 
   // Converts the form data to a URL string
   const queryString = new URLSearchParams(formDataNormalized);
+  console.log(queryString);
 
   // Query TMDb for a response that matches the user's criteria
   fetch("https://api.themoviedb.org/3/discover/movie?" + queryString + "&sort_by=popularity.desc", requestOptions)
