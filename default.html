@@ -43,6 +43,8 @@
                 left: 50%;
                 width: 35%;
                 overflow: auto;
+                display: flex;
+                flex-direction: column;
             }
             #right-col {
                 transform: translate(-100%, 0%);
@@ -142,10 +144,18 @@
                 text-align: center;
             }
             #adderbox-div {
-                position: absolute;
-                transform: translate(-50%, -100%);
-                left: 50%; top: 98%;
-                width: 95%; height: 5%;
+                position: sticky;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: auto;
+                bottom: 10px;
+                width: calc(100% - 20px);
+                height: 44px;
+                min-height: 44px;
+                max-height: 44px;
+                box-sizing: border-box;
+                flex-shrink: 0;
+                z-index: 2;
 
                 background-color: #FFFFFFA8;
                 border: 1.5px solid darkgray;
@@ -174,6 +184,27 @@
                 outline: none;
                 box-shadow: none !important;
                 border: 1px solid transparent;
+            }
+            #movie-list {
+                list-style-type: none;
+                padding: 0;
+                margin: 0 auto 56px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            /* Movie list items */
+            .movie-item {
+                text-align: center;
+                border: 1px solid #9aa7c0;
+                background-color: rgba(247, 249, 255, 0.72);
+                border-radius: 8px;
+                padding: 8px 10px;
+                margin: 6px 0;
+                width: 92%;
+                max-width: 460px;
+                box-sizing: border-box;
             }
 
             /*** Right column stuff ***/
@@ -205,7 +236,7 @@
     </head>
     <body>
         <!--title-->
-            <h1 id="title">Welcome to Watch Wheel!!</h1>
+            <h1 id="title">Welcome to WatchWheel!!</h1>
 
         <!--first column with all the movie attributes-->
         <div id="left-col" class="col">
@@ -290,7 +321,7 @@
         <!--right column with movie poster-->
         <div id="right-col" class="col">
             <div id="movie-selector-div">
-                <button id="movie-selector">Pick a Movie</button>
+                <button id="movie-selector">Random Movie</button>
             </div><br/>
             <h2 id="results-header"></h2>
             <img id="results-image" src="assets/question-mark.png"></img>

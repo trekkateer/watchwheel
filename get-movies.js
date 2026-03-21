@@ -118,6 +118,11 @@ function addMovies(movies, replaceExisting = false) {
   movies.forEach(movie => {
     const newMovie = document.createElement("li");
     newMovie.innerText = movie.title;
+    newMovie.className = "movie-item";
     movieList.append(newMovie);
+
+    const trashButton = document.createElement("i");
+    trashButton.className = "trash-movie fa-regular fa-trash-can";
+    //newMovie.append(trashButton);
   });
 }
