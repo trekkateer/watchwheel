@@ -145,7 +145,7 @@ for (var i = 1; i <= 20; i++) {// Loops through the pages
     .then(result => result.results.forEach(element => {
         //Identifies the region div
         const container = document.getElementById("involved-persons");
-        const inputId = "person-" + element.id;
+        const inputId = "person=" + element.id;
 
         const row = document.createElement("div");
         row.className = "person-item";
