@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Watch Wheel</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /*** Body ***/
+            body {
+                background: #2A7B9B;
+                background: linear-gradient(45deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+            }
+
+            /*does the title*/
+            #title {
+                text-align: center;
+            }
+
+            /*** General columns ***/
+            .col {
+                position: absolute;
+
+                top: 10%;
+                height: 80%;
+                /*border: 1px solid red;
+                border-radius: 15px;
+                /*padding: 20px;*/
+            }
+
+            /*** Left column ***/
+            #movie-filter {
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--title-->
+            <h1 id="title">Welcome to Watch Wheel!!</h1>
+
+        <!--first column with all the movie attributes-->
+        <div id="left-col" class="col" style="transform: translate(0%, 0%); left: 5%; width: 23.5%;">
+            <form id="movie-filter">
+                <h2>Genre</h2>
+                <input type="checkbox" name="Action" value="action"></input><label for="Action">Action</label>
+                <input type="checkbox" name="Romance" value="romance"></input><label for="Romance">Romance</label>
+                <input type="checkbox" name="Christian" value="christian"></input><label for="Christian">Christian</label>
+            </form>
+        </div>
+
+        <!--middle column where the wheel will be-->
+        <div id="mid-col" class="col" style="transform: translate(-50%, 0%); left: 50%; width: 35%;">
+
+        </div>
+
+        <!--right column with movie poster-->
+        <div id="right-col" class="col" style="transform: translate(-100%, 0%); left: 95%; width: 23.5%;">
+
+        </div>
+
+        <!--runs our scripts-->
+        <script src="get-data.js"></script>
+    </body>
+</html>
