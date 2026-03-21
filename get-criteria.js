@@ -3,6 +3,25 @@
  */
 
 
+/** Creates the toggle preferences functionality **/
+const preferenceHeadings = document.getElementsByClassName("showmore-button");
+Array.from(preferenceHeadings).forEach(element => {
+  element.addEventListener("click", function() {
+    // Shows or hides the preference block as a single layout change.
+    const preference = this.id.split('-showmore')[0];
+    const button = document.getElementById(preference + "-showmore");
+    const fieldset = document.getElementById(preference);
+    const fieldline = document.getElementById(preference + '-line');
+    const shouldOpen = fieldset.style.display === "none";
+
+    // Update UI to reflect the user's click
+    fieldset.style.display = shouldOpen ? "block" : "none";
+    fieldline.style.display = !shouldOpen ? "block" : "none";
+    button.innerHTML = shouldOpen ? '<i class="fas fa-caret-up"></i>' : '<i class="fas fa-caret-down"></i>';
+  })
+});
+
+
 /*** Creates request options that we will use for queries ***/
 // Creates headers
 var myHeaders = new Headers();
@@ -52,6 +71,7 @@ fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
       button.type = "radio";
       button.name = element.english_name;
       button.value = element.iso_639_1;
+      if (button.value === "en") { button.checked = "checked"; }
       container.append(button);
 
       //Creates the label for the radio
@@ -61,6 +81,21 @@ fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
       container.append(label)
   }))
   .catch(error => console.log('error', error));
+
+
+// Adds event listeners to the Release Date
+document.getElementById("min-release-slider").addEventListener("change", function() {
+  document.getElementById("min-release-scrubber").value = this.value;
+});
+document.getElementById("min-release-scrubber").addEventListener("change", function() {
+  document.getElementById("min-release-slider").value = this.value;
+});
+document.getElementById("max-release-slider").addEventListener("change", function() {
+  document.getElementById("max-release-scrubber").value = this.value;
+});
+document.getElementById("max-release-scrubber").addEventListener("change", function() {
+  document.getElementById("max-release-slider").value = this.value;
+});
 
 
 // Adds event listeners to the Runtime Range input fields
@@ -76,7 +111,6 @@ document.getElementById("max-runtime-slider").addEventListener("change", functio
 document.getElementById("max-runtime-scrubber").addEventListener("change", function() {
   document.getElementById("max-runtime-slider").value = this.value;
 });
-
 
 
 // Adds event listeners to the Rating Range input fields
@@ -114,7 +148,7 @@ for (var i = 1; i <= 20; i++) {// Loops through the pages
 
 
 // Queries for the first 4000 studios
-for (var i = 1; i <= 4000; i++) {
+/*for (var i = 1; i <= 4000; i++) {
   fetch("https://api.themoviedb.org/3/company/"+i, requestOptions)
     .then(response => response.json())
     .then(result => {console.log(result);
@@ -138,7 +172,7 @@ for (var i = 1; i <= 4000; i++) {
       }
     })
     .catch(error => console.log('error', error));
-}
+}*/
 
 
 // Queries for streaming regions

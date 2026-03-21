@@ -4,8 +4,12 @@
 
 
 /*** Creates event listhener for the input form ***/
-document.getElementById("movie-filter").addEventListener("submit", function() {
-  
+document.getElementById("movie-filter").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var formData = new FormData(this);
+  // output as an object
+  console.log(Object.fromEntries(formData));
 });
 
 

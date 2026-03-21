@@ -4,12 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Watch Wheel</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="style.css">
         <style>
             /*** Body ***/
             body {
-                background: #2A7B9B;
-                background: linear-gradient(100deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+                background: #0000ff;
+                background: linear-gradient(90deg,rgba(0, 0, 255, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
             }
 
             /*does the title*/
@@ -17,20 +18,80 @@
                 text-align: center;
             }
 
-            /*** General columns ***/
+            /*** Columns ***/
             .col {
                 position: absolute;
 
                 top: 10%;
                 height: 80%;
-                /*border: 1px solid red;
-                border-radius: 15px;
-                /*padding: 20px;*/
+
+                background-color: #FFFFFFA8;
+                border: 1.5px solid darkgray;
+                padding-left: 10px;
+                padding-right: 10px;
             }
+            #left-col {
+                transform: translate(0%, 0%);
+                left: 5%;
+                width: 23.5%;
+                border-radius: 17.5px 0px 0px 17.5px;
+                overflow: auto;
+            }
+            #mid-col {
+                transform: translate(-50%, 0%);
+                left: 50%;
+                width: 35%;
+
+                background-color: #FFFFFF00;
+                border-width: 0px;
+            }
+            #right-col {
+                transform: translate(-100%, 0%);
+                left: 95%;
+                width: 23.5%;
+                border-radius: 0px 17.5px 17.5px 0px;
+            }
+
 
             /*** Left column ***/
             #movie-filter {
                 margin: 10px;
+            }
+            hr {
+                display: none;
+            }
+            #filter-submit-div {
+                position: sticky;
+                transform: translate(0%, 0%);
+                top: 10px;
+                padding: 5px;
+
+                background-color: #FFFFFFA8;
+                border: 1.5px solid darkgray;
+                border-radius: 5px;
+            }
+
+            /*** Middle Column Stuff ***/
+            #adderbox-div {
+                position: absolute;
+                transform: translate(-50%, -100%);
+                left: 50%; top: 100%;
+                width: 100%;
+
+                background-color: #FFFFFFA8;
+                border: 1.5px solid darkgray;
+            }
+            #adderbox {
+                text-align: left;
+                width: 100%; height: 100%;
+                box-sizing: border-box;
+
+                background-color: #FFFFFF00;
+                border: none;
+            } #adderbox:focus {
+                outline: none;
+                box-shadow: none !important;
+                border: 1px solid transparent;
             }
         </style>
     </head>
@@ -39,28 +100,37 @@
             <h1 id="title">Welcome to Watch Wheel!!</h1>
 
         <!--first column with all the movie attributes-->
-        <div id="left-col" class="col" style="transform: translate(0%, 0%); left: 5%; width: 23.5%;">
+        <div id="left-col" class="col">
+            <div id="filter-submit-div">
+                <input type="submit" form="movie-filter" value="Submit"/>
+                <input type="reset" form="movie-filter"></input>
+            </div>
             <form id="movie-filter">
-                <h2>Genre</h2>
-                <fieldset id="genres" style="display: none;">
+                <h2 class="preference-heading">Genre&ensp;<button id="genres-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="genres">
                     <legend>Genre</legend>
                 </fieldset>
-                <hr/>
+                <hr id="genres-line"/>
 
-                <h2>Language</h2>
-                <fieldset id="languages" style="display: none;">
+                <h2 class="preference-heading">Language&ensp;<button id="languages-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="languages">
                     <legend>Language</legend>
                 </fieldset>
-                <hr/>
+                <hr id="languages-line"/>
 
-                <h2>Release Date</h2>
-                <fieldset id="release-date" style="display: none;">
+                <h2 class="preference-heading">Release Date&ensp;<button id="release-date-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="release-date">
                     <legend>Release Date</legend>
-                    <input type="date" name="Release Date"></fieldset>
+                    <input id="min-release-slider" type="range" min="1900" max="2026" value="1900" step="1"/>
+                    <input id="max-release-slider" type="range" min="1900" max="2026" value="2026" step="1"/><br/>
+                    <label for="min-release">Min</label>
+                    <input id="min-release-scrubber" type="number" name="min-release" value="1900" min="1900" max="2026" step="1" style="max-width: 50px"/>
+                    <label for="max-release">Max</label>
+                    <input id="max-release-scrubber" type="number" name="max-release" value="2026" min="1900" max="2026" step="1" style="max-width: 50px"/>
                 </fieldset>
-                <hr/>
+                <hr id="release-date-line"/>
 
-                <h2>Runtime</h2>
+                <h2 class="preference-heading">Runtime&ensp;<button id="runtime-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="runtime">
                     <legend>Runtime</legend>
                     <input id="min-runtime-slider" type="range" min="0" max="5" step="0.1"/>
@@ -70,49 +140,48 @@
                     <label for="max-runtime">Max</label>
                     <input id="max-runtime-scrubber" type="number" name="max-runtime" value="2.5" min="0" max="5" step="0.1" style="max-width: 50px"/>
                 </fieldset>
-                <hr/>
+                <hr id="runtime-line"/>
 
-                <h2>Minimum Rating</h2>
-                <fieldset id="min-rating" style="display: none;">
+                <h2 class="preference-heading">Minimum Rating&ensp;<button id="min-rating-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="min-rating">
                     <legend>Average Rating</legend>
                     <input id="min-rating-slider" type="range" min="0" max="10" step="0.1"/><br/>
                     <label for="min-rating">Min</label>
                     <input id="min-rating-scrubber" type="number" name="min-rating" value="5" min="0" max="10" step="0.1" style="max-width: 50px"/>
                 </fieldset>
-                <hr/>
+                <hr id="min-rating-line"/>
 
-                <h2>Involved Persons</h2>
-                <fieldset id="involved-persons" style="display: none;">
+                <h2 class="preference-heading">Involved Persons&ensp;<button id="involved-persons-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="involved-persons">
                     <legend>Involved Persons</legend>
                 </fieldset>
-                <hr/>
+                <hr id="involved-persons-line"/>
 
-                <h2>Involved Studios</h2>
-                <fieldset id="involved-studios" style="display: none;">
+                <h2 class="preference-heading">Involved Studios&ensp;<button id="involved-studios-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="involved-studios">
                     <legend>Involved Studios</legend>
                 </fieldset>
-                <hr/>
+                <hr id="involved-studios-line"/>
 
-                <h2>Streaming Region</h2>
-                <fieldset id="streaming-regions" style="display: none;">
+                <h2 class="preference-heading">Streaming Region&ensp;<button id="streaming-regions-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
+                <fieldset id="streaming-regions">
                     <legend>Streaming Region</legend>
                 </fieldset>
-                <hr/>
-
-                <input type="submit" value="Submit"/>
-
-                <!--clear button-->
-                <input type="reset"></input>
+                <hr id="streaming-regions-line"/>
             </form>
         </div>
 
         <!--middle column where the wheel will be-->
-        <div id="mid-col" class="col" style="transform: translate(-50%, 0%); left: 50%; width: 35%;">
+        <div id="mid-col" class="col">
+            <div id="adderbox-div">
+                <textarea id="adderbox" placeholder="Add titles to the wheel">
 
+                </textarea>
+            </div>
         </div>
 
         <!--right column with movie poster-->
-        <div id="right-col" class="col" style="transform: translate(-100%, 0%); left: 95%; width: 23.5%;">
+        <div id="right-col" class="col">
 
         </div>
 
