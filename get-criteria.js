@@ -74,7 +74,7 @@ fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
       //Identifies the language div
       const container = document.getElementById("languages");
       const elName = "with_original_language";
-      const inputId = "language-" + element.iso_639_1;
+      const inputId = "language=" + element.iso_639_1;
 
       const row = document.createElement("div");
       row.className = "language-item";
