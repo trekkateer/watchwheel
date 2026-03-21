@@ -204,7 +204,7 @@ fetch("https://api.themoviedb.org/3/watch/providers/regions", requestOptions)
   .then(result => result.results.forEach(element => {
       //Identifies the region div
       const container = document.getElementById("streaming-regions");
-      const inputId = "region-" + element.iso_3166_1;
+      const inputId = "region=" + element.iso_3166_1;
 
       const row = document.createElement("div");
       row.className = "streaming-region-item";
