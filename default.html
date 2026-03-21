@@ -41,15 +41,14 @@
                 transform: translate(-50%, 0%);
                 left: 50%;
                 width: 35%;
-
-                background-color: #FFFFFF00;
-                border-width: 0px;
+                overflow: auto;
             }
             #right-col {
                 transform: translate(-100%, 0%);
                 left: 95%;
                 width: 23.5%;
                 border-radius: 0px 17.5px 17.5px 0px;
+                overflow: auto;
             }
 
 
@@ -57,7 +56,7 @@
             #movie-filter {
                 margin: 10px;
             }
-            hr {
+            .filtergroup-line {
                 display: none;
             }
             #filter-submit-div {
@@ -72,26 +71,65 @@
             }
 
             /*** Middle Column Stuff ***/
+            #potential-movies-header {
+                text-align: center;
+            }
             #adderbox-div {
                 position: absolute;
                 transform: translate(-50%, -100%);
-                left: 50%; top: 100%;
-                width: 100%;
+                left: 50%; top: 98%;
+                width: 95%; height: 5%;
 
                 background-color: #FFFFFFA8;
                 border: 1.5px solid darkgray;
+                border-radius: 5px;
             }
-            #adderbox {
-                text-align: left;
-                width: 100%; height: 100%;
-                box-sizing: border-box;
+            #adderbox-text {
+                position: absolute;
+                transform: translate(0%, -50%);
+                left: 0%; top: 50%;
 
-                background-color: #FFFFFF00;
-                border: none;
-            } #adderbox:focus {
+                width: 79%; height: 100%;
+                box-sizing: border-box;
+            } #adderbox-text:focus {
                 outline: none;
                 box-shadow: none !important;
                 border: 1px solid transparent;
+            }
+            #adderbox-submit {
+                position: absolute;
+                transform: translate(-100%, -50%);
+                left: 100%; top: 50%;
+
+                width: 19%; height: 100%;
+                box-sizing: border-box;
+            } #adderbox-submit:focus {
+                outline: none;
+                box-shadow: none !important;
+                border: 1px solid transparent;
+            }
+
+            /*** Right column stuff ***/
+            #results-image {
+                position: absolute;
+                transform: translate(-50%, -50%);
+                left: 50%; top: 50%;
+                width: 95%;
+                max-height: 55vh;
+                object-fit: contain;
+                display: block;
+                margin-top: 12px;
+            }
+            #movie-selector-div {
+                position: sticky;
+                transform: translate(0%, 0%);
+                top: 10px;
+                padding: 5px;
+                width: 95%;
+
+                background-color: #FFFFFFA8;
+                border: 1.5px solid darkgray;
+                border-radius: 5px;
             }
         </style>
     </head>
@@ -110,25 +148,25 @@
                 <fieldset id="genres">
                     <legend>Genre</legend>
                 </fieldset>
-                <hr id="genres-line"/>
+                <hr id="genres-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Language&ensp;<button id="languages-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="languages">
                     <legend>Language</legend>
                 </fieldset>
-                <hr id="languages-line"/>
+                <hr id="languages-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Release Date&ensp;<button id="release-date-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="release-date">
                     <legend>Release Date</legend>
                     <input id="min-release-slider" type="range" min="1900" max="2026" value="1900" step="1"/>
                     <input id="max-release-slider" type="range" min="1900" max="2026" value="2026" step="1"/><br/>
-                    <label for="min-release">Min</label>
-                    <input id="min-release-scrubber" type="number" name="min-release" value="1900" min="1900" max="2026" step="1" style="max-width: 50px"/>
-                    <label for="max-release">Max</label>
-                    <input id="max-release-scrubber" type="number" name="max-release" value="2026" min="1900" max="2026" step="1" style="max-width: 50px"/>
+                    <label for="primary_release_date.gte">Min</label>
+                    <input id="min-release-scrubber" type="number" name="primary_release_date.gte" value="1900" min="1900" max="2026" step="1" style="max-width: 50px"/>
+                    <label for="primary_release_date.lte">Max</label>
+                    <input id="max-release-scrubber" type="number" name="primary_release_date.lte" value="2026" min="1900" max="2026" step="1" style="max-width: 50px"/>
                 </fieldset>
-                <hr id="release-date-line"/>
+                <hr id="release-date-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Runtime&ensp;<button id="runtime-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="runtime">
@@ -140,7 +178,7 @@
                     <label for="max-runtime">Max</label>
                     <input id="max-runtime-scrubber" type="number" name="max-runtime" value="2.5" min="0" max="5" step="0.1" style="max-width: 50px"/>
                 </fieldset>
-                <hr id="runtime-line"/>
+                <hr id="runtime-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Minimum Rating&ensp;<button id="min-rating-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="min-rating">
@@ -149,7 +187,7 @@
                     <label for="min-rating">Min</label>
                     <input id="min-rating-scrubber" type="number" name="min-rating" value="5" min="0" max="10" step="0.1" style="max-width: 50px"/>
                 </fieldset>
-                <hr id="min-rating-line"/>
+                <hr id="min-rating-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Involved Persons&ensp;<button id="involved-persons-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="involved-persons">
@@ -161,32 +199,44 @@
                 <fieldset id="involved-studios">
                     <legend>Involved Studios</legend>
                 </fieldset>
-                <hr id="involved-studios-line"/>
+                <hr id="involved-studios-line" class="filtergroup-line"/>
 
                 <h2 class="preference-heading">Streaming Region&ensp;<button id="streaming-regions-showmore" class="showmore-button" type="button"><i class="fas fa-caret-up"></i></button></h2>
                 <fieldset id="streaming-regions">
                     <legend>Streaming Region</legend>
                 </fieldset>
-                <hr id="streaming-regions-line"/>
+                <hr id="streaming-regions-line" class="filtergroup-line"/>
             </form>
         </div>
 
         <!--middle column where the wheel will be-->
         <div id="mid-col" class="col">
-            <div id="adderbox-div">
-                <textarea id="adderbox" placeholder="Add titles to the wheel">
+            <h2 id="potential-movies-header">Potential Movies:</h2>
+            <hr/>
 
-                </textarea>
+            <ul id="movie-list">
+            </ul>
+
+            <div id="adderbox-div">
+                <form id="adderbox">
+                    <input id="adderbox-text" type="text" placeholder="Add titles manually"></input>
+                    <input id="adderbox-submit" type="submit">Submit</input>
+                </form>
             </div>
         </div>
 
         <!--right column with movie poster-->
         <div id="right-col" class="col">
-
+            <div id="movie-selector-div">
+                <button id="movie-selector">Pick a Movie</button>
+            </div>
+            <h2 id="results-header"></h2>
+            <img id="results-image" src="assets/question-mark.png"></img>
         </div>
 
         <!--runs our scripts-->
         <script src="get-criteria.js"></script>
         <script src="get-movies.js"></script>
+        <script src="select-movie.js"></script>
     </body>
 </html>

@@ -43,17 +43,18 @@ fetch("https://api.themoviedb.org/3/genre/movie/list", requestOptions)
   .then(result => result.genres.forEach(element => {
       //Identifies the genre div
       const container = document.getElementById("genres");
+      const elName = "with_genres=" + element.name.toLowerCase();
 
       //Creates the checkbox for the genre
       const box = document.createElement("input");
       box.type = "checkbox";
-      box.name = element.name;
+      box.name = elName;
       box.value = element.id;
       container.append(box);
 
       //Creates the label for the checkbox
       const label = document.createElement("label");
-      label.for = element.name;
+      label.for = elName;
       label.innerText = element.name;
       container.append(label)
   }))
@@ -65,18 +66,19 @@ fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
   .then(result => result.forEach(element => {
       //Identifies the language div
       const container = document.getElementById("languages");
+      const elName = "language=" + element.english_name.toLowerCase();
 
       //Creates the radio for the language
       const button = document.createElement("input");
       button.type = "radio";
-      button.name = element.english_name;
+      button.name = elName;
       button.value = element.iso_639_1;
       if (button.value === "en") { button.checked = "checked"; }
       container.append(button);
 
       //Creates the label for the radio
       const label = document.createElement("label");
-      label.for = element.english_name;
+      label.for = elName;
       label.innerText = element.english_name;
       container.append(label)
   }))
