@@ -52,6 +52,7 @@ WatchWheel is a browser-based movie picker that uses [TMDb](https://www.themovie
 ## TODO:
 
 - Make Spinning Wheel in the center to make the application more interactive
+- Create a logo
 - Add client-side validation for filter ranges
 - Fix the studio API call
 - Add loading states and empty-state messaging
