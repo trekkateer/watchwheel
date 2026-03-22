@@ -57,4 +57,5 @@ WatchWheel is a browser-based movie picker that uses [TMDb](https://www.themovie
 - Add loading states and empty-state messaging
 - Add pagination or "load more" for discover results, create counter to show how many results there are
 - Add persistent saved filter presets
+- Have confetti appear when the user finds a movie to watch
 - Replace client-side token usage with backend-proxied API calls

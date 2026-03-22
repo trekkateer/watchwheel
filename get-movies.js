@@ -121,6 +121,7 @@ function addMovies(movies, replaceExisting = false) {
     newMovie.className = "movie-item";
     movieList.append(newMovie);
 
+    //TODO: Make a button that will allow the user to delete a movie from the list
     const trashButton = document.createElement("i");
     trashButton.className = "trash-movie fa-regular fa-trash-can";
     //newMovie.append(trashButton);
