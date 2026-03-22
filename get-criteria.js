@@ -25,7 +25,6 @@ Array.from(preferenceHeadings).forEach(element => {
 /*** Creates request options that we will use for queries ***/
 // Creates headers
 var myHeaders = new Headers();
-myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NDA5YWNhNTU0YjEzOTc2NjM1OTI0ZTFhOWIxYjU1OSIsIm5iZiI6MTc3NDA2Mjk2Ni4xMDQsInN1YiI6IjY5YmUwZDc2ZjBkMzg5ZWE3YmEzZGI0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CxuIrI90cyCSzSv8fxZbpaIS4H0N984CD1D67txlo-c");
 myHeaders.append("accept", "application/json");
 
 // Creates request options and adds headers to them
@@ -35,6 +34,26 @@ var requestOptions = {
   redirect: 'follow'
 };
 
+// Loads the TMDb token from a local text file and then queries TMDb criteria endpoints.
+fetch('API-read-access-token.txt')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Could not read API-read-access-token.txt");
+    }
+    return response.text();
+  })
+  .then((data) => {
+    const token = data.trim();
+    if (!token) {
+      throw new Error("API-read-access-token.txt is empty");
+    }
+
+    const authHeader = "Bearer " + token;
+    myHeaders.append("Authorization", authHeader);
+  })
+  .catch((error) => {
+    console.error("Unable to initialize TMDb token", error);
+  });
 
 /*** Queries TMDb API for data and adds to the user input panel ***/
 //Queries for genres

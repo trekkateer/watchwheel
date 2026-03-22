@@ -1,2 +1,2 @@
-#Ignore apis.txt
-APIs.txt
+#Ignore API-key.txt and API-read-access-token.txt
+API*
