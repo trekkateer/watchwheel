@@ -129,6 +129,9 @@ body {
     border: 1.5px solid darkgray;
     border-radius: 5px;
 }
+input[type="number"] {
+    max-width: 50px;
+}
 
 /*** Middle Column Stuff ***/
 #potential-movies-header {
