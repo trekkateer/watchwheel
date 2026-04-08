@@ -2,6 +2,14 @@
  * Will query TMDb for their criteria and add those criteria to the user input panel
  */
 
+// Loads the TMDb token from a local text file and then queries TMDb criteria endpoints.
+let accessToken;
+fetch("API-read-access-token.txt")
+  .then((res) => res.text())
+  .then((text) => {
+    accessToken = text;
+   })
+  .catch((e) => console.error(e));
 
 /** Creates the toggle preferences functionality **/
 const preferenceHeadings = document.getElementsByClassName("showmore-button");
@@ -26,6 +34,7 @@ Array.from(preferenceHeadings).forEach(element => {
 // Creates headers
 var myHeaders = new Headers();
 myHeaders.append("accept", "application/json");
+myHeaders.append("Authorization", "Bearer " + accessToken);
 
 // Creates request options and adds headers to them
 var requestOptions = {
@@ -34,55 +43,34 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-// Loads the TMDb token from a local text file and then queries TMDb criteria endpoints.
-fetch('API-read-access-token.txt')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Could not read API-read-access-token.txt");
-    }
-    return response.text();
-  })
-  .then((data) => {
-    const token = data.trim();
-    if (!token) {
-      throw new Error("API-read-access-token.txt is empty");
-    }
-
-    const authHeader = "Bearer " + token;
-    myHeaders.append("Authorization", authHeader);
-  })
-  .catch((error) => {
-    console.error("Unable to initialize TMDb token", error);
-  });
-
 /*** Queries TMDb API for data and adds to the user input panel ***/
 //Queries for genres
 fetch("https://api.themoviedb.org/3/genre/movie/list", requestOptions)
   .then(response => response.json())
   .then(result => result.genres.forEach(element => {
-      //Identifies the genre div
-      const container = document.getElementById("genres");
-      const elName = "with_genres=" + element.name.toLowerCase();
-      const inputId = "genre-" + element.id;
+    //Identifies the genre div
+    const container = document.getElementById("genres");
+    const elName = "with_genres=" + element.name.toLowerCase();
+    const inputId = "genre-" + element.id;
 
-      const row = document.createElement("div");
-      row.className = "genre-item";
+    const row = document.createElement("div");
+    row.className = "genre-item";
 
-      //Creates the checkbox for the genre
-      const box = document.createElement("input");
-      box.type = "checkbox";
-      box.name = elName;
-      box.value = element.id;
-      box.id = inputId;
-      row.append(box);
+    //Creates the checkbox for the genre
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.name = elName;
+    box.value = element.id;
+    box.id = inputId;
+    row.append(box);
 
-      //Creates the label for the checkbox
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerText = element.name;
-      row.append(label);
+    //Creates the label for the checkbox
+    const label = document.createElement("label");
+    label.htmlFor = inputId;
+    label.innerText = element.name;
+    row.append(label);
 
-      container.append(row);
+    container.append(row);
   }))
   .catch(error => console.log('error', error));
 
@@ -90,30 +78,30 @@ fetch("https://api.themoviedb.org/3/genre/movie/list", requestOptions)
 fetch("https://api.themoviedb.org/3/configuration/languages", requestOptions)
   .then(response => response.json())
   .then(result => result.forEach(element => {
-      //Identifies the language div
-      const container = document.getElementById("languages");
-      const elName = "with_original_language";
-      const inputId = "language=" + element.iso_639_1;
+    //Identifies the language div
+    const container = document.getElementById("languages");
+    const elName = "with_original_language";
+    const inputId = "language=" + element.iso_639_1;
 
-      const row = document.createElement("div");
-      row.className = "language-item";
+    const row = document.createElement("div");
+    row.className = "language-item";
 
-      //Creates the radio for the language
-      const button = document.createElement("input");
-      button.type = "radio";
-      button.name = elName;
-      button.value = element.iso_639_1;
-      button.id = inputId;
-      if (button.value === "en") { button.checked = "checked"; }
-      row.append(button);
+    //Creates the radio for the language
+    const button = document.createElement("input");
+    button.type = "radio";
+    button.name = elName;
+    button.value = element.iso_639_1;
+    button.id = inputId;
+    if (button.value === "en") { button.checked = "checked"; }
+    row.append(button);
 
-      //Creates the label for the radio
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerText = element.english_name;
-      row.append(label);
+    //Creates the label for the radio
+    const label = document.createElement("label");
+    label.htmlFor = inputId;
+    label.innerText = element.english_name;
+    row.append(label);
 
-      container.append(row);
+    container.append(row);
   }))
   .catch(error => console.log('error', error));
 
@@ -221,27 +209,27 @@ for (var i = 1; i <= 20; i++) {// Loops through the pages
 fetch("https://api.themoviedb.org/3/watch/providers/regions", requestOptions)
   .then(response => response.json())
   .then(result => result.results.forEach(element => {
-      //Identifies the region div
-      const container = document.getElementById("streaming-regions");
-      const inputId = "region=" + element.iso_3166_1;
+    //Identifies the region div
+    const container = document.getElementById("streaming-regions");
+    const inputId = "region=" + element.iso_3166_1;
 
-      const row = document.createElement("div");
-      row.className = "streaming-region-item";
+    const row = document.createElement("div");
+    row.className = "streaming-region-item";
 
-      //Creates the radio button for the region
-      const button = document.createElement("input");
-      button.type = "radio";
-      button.name = element.english_name;
-      button.value = element.iso_3166_1;
-      button.id = inputId;
-      row.append(button);
+    //Creates the radio button for the region
+    const button = document.createElement("input");
+    button.type = "radio";
+    button.name = element.english_name;
+    button.value = element.iso_3166_1;
+    button.id = inputId;
+    row.append(button);
 
-      //Creates the label for the button
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerText = element.english_name;
-      row.append(label);
+    //Creates the label for the button
+    const label = document.createElement("label");
+    label.htmlFor = inputId;
+    label.innerText = element.english_name;
+    row.append(label);
 
-      container.append(row);
+    container.append(row);
   }))
   .catch(error => console.log('error', error));
